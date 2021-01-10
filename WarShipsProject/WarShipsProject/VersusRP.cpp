@@ -3,10 +3,11 @@
 using namespace std;
 
 int GermansNumbers[5];
-int BreakersGuessNumbers[5];
-int RightGuessedNumber[5];
-int NumbersCount = 0;
-int CoordsCount = 0;
+int BreakersGuessNumbersRP[5];
+int RightGuessedNumberRP[5];
+int NumbersCountRP = 0;
+int CoordsCountRP = 0;
+bool flagRP=false;
 
 void InputGermansNumbersR()
 {
@@ -47,22 +48,22 @@ void InputBreakersGuess()
 	for (int i = 1; i <= 4; i++)
 	{
 		cout << "Number " << i << ": ";
-		cin >> BreakersGuessNumbers[i];
+		cin >> BreakersGuessNumbersRP[i];
 	}
 }
 
-void CheckBreakersGuess()
+void CheckBreakersGuessRP()
 {
 	for (int i = 1; i <= 4; i++)
 	{
 		for (int j = 1; j <= 4; j++)
 		{
-			if (BreakersGuessNumbers[i] == GermansNumbers[j])
+			if (BreakersGuessNumbersRP[i] == GermansNumbers[j])
 			{
-				RightGuessedNumber[NumbersCount++] = BreakersGuessNumbers[i];
-				if ((i ==j)  && (BreakersGuessNumbers[i] == GermansNumbers[j]))
+				NumbersCountRP++;
+				if (i == j)
 				{
-					CoordsCount++;
+					CoordsCountRP++;
 				}
 				i++;
 			}
@@ -72,19 +73,22 @@ void CheckBreakersGuess()
 
 void FeedbackAfterRound()
 {
-	if (CoordsCount == 0)
+	if (CoordsCountRP == 0)
 	{
-		cout << "You've guessed " << NumbersCount << "numbers correctly, but none of them was in the right spot!" << endl;
-		NumbersCount = 0;
+		cout << "You've guessed " << NumbersCountRP << "numbers correctly, but none of them was in the right spot!" << endl;
+		NumbersCountRP = 0;
 	}
-	else if(CoordsCount!=4 && CoordsCount!=0)
+	else if(CoordsCountRP!=4 && CoordsCountRP!=0)
 	{
-		cout << "You've guessed " << CoordsCount << "numbers correctly on their places, and " << NumbersCount << "numbers, but not on their correct places!" << endl;
-		CoordsCount = 0;
-		NumbersCount = 0;
+		cout << "You've guessed " << CoordsCountRP+1 << "numbers correctly on their places, and " << NumbersCountRP-CoordsCountRP << "numbers, but not on their correct places!" << endl;
+		CoordsCountRP = 0;
+		NumbersCountRP = 0;
 	}
-	else if(CoordsCount==4)
+	else if(CoordsCountRP==4)
 	{
 		cout << "Congatulations, you have beaten the game, you have guessed all the numbers on their correct spots" << endl << endl << endl;
+		NumbersCountRP = 0;
+		flagRP = true;
+		CoordsCountRP = 0;
 	}
 }
