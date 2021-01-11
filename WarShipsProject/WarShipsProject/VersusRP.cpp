@@ -8,6 +8,31 @@ int RightGuessedNumberRP[5];
 int NumbersCountRP = 0;
 int CoordsCountRP = 0;
 bool flagRP=false;
+int HistoryOfRoundsRP[14][5];
+int RowCounterRP = 1;
+
+void StoringHistoryOfRoundsRP()
+{
+	for (int j = 1; j < 5; j++)
+	{
+		HistoryOfRoundsRP[RowCounterRP][j] = BreakersGuessNumbersRP[j];
+	}
+	RowCounterRP++;
+}
+
+void VisualizingHistoryOfRoundsRP()
+{
+	for (int i = 1; i < RowCounterRP; i++)
+	{
+		for (int j = 1; j < 5; j++)
+		{
+			cout << "[ ";
+			cout << HistoryOfRoundsRP[i][j]<<" ";
+			cout << "] ";
+		}
+		cout << endl;
+	}
+}
 
 void InputGermansNumbersR()
 {
@@ -49,6 +74,12 @@ void InputBreakersGuess()
 	{
 		cout << "Number " << i << ": ";
 		cin >> BreakersGuessNumbersRP[i];
+		if (BreakersGuessNumbersRP[i] < 0 || BreakersGuessNumbersRP[i]>7)
+		{
+			cout << "Please, type the number again!";
+			i--;
+			cout << endl;
+		}
 	}
 }
 
