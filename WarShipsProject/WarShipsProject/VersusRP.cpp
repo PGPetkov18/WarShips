@@ -1,4 +1,4 @@
-#include "pch.h"
+﻿#include "pch.h"
 #include <iostream>
 using namespace std;
 
@@ -10,6 +10,7 @@ int CoordsCountRP = 0;
 bool flagRP=false;
 int HistoryOfRoundsRP[14][5];
 int RowCounterRP = 1;
+bool flagRPN = false;
 
 void StoringHistoryOfRoundsRP()
 {
@@ -33,6 +34,33 @@ void VisualizingHistoryOfRoundsRP()
 		cout << endl;
 	}
 }
+
+/*void CheckRPN()
+{
+	for (int i = 1; i <= 4; i++)
+	{
+		for(int j=i;j<=4;j++)
+		{
+			do
+			{​​​​​
+				if(j!=i)
+			    {		​​​​​
+					if (userNumbers[i] == userNumbers[j])
+					{			​​​​​
+						b = true;
+					}​​​​​
+				}​​​​​
+				if (b == true)
+				{
+					cout << "Please re-enter number " << i + 1 << ". Duplicate numbers are not allowed:" << endl;
+					b = false;
+					cin >> userNumbers[i];
+				}​​​​​
+			}​​​​​ while(b == true);
+		}​​​​​
+		b = false;
+	}​​​​​
+}*/
 
 void InputGermansNumbersR()
 {
