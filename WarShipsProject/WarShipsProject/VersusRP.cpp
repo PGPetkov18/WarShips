@@ -1,4 +1,4 @@
-#include "pch.h"
+﻿#include "pch.h"
 #include <iostream>
 using namespace std;
 
@@ -8,6 +8,7 @@ int RightGuessedNumberRP[4];
 int NumbersCountRP = 0;
 int CoordsCountRP = 0;
 bool flagRP=false;
+<<<<<<< HEAD
 bool flagCheckRPN = false;
 int HistoryOfRoundsRP[14][5];
 int RowCounterRP = 1;
@@ -15,6 +16,15 @@ int RowCounterRP = 1;
 void StoringHistoryOfRoundsRP()
 {
 	for (int j = 0; j < 4; j++)
+=======
+int HistoryOfRoundsRP[14][5];
+int RowCounterRP = 1;
+bool flagRPN = false;
+
+void StoringHistoryOfRoundsRP()
+{
+	for (int j = 1; j < 5; j++)
+>>>>>>> 45b2948b696d27dffc738bb133743f1531403b80
 	{
 		HistoryOfRoundsRP[RowCounterRP][j] = BreakersGuessNumbersRP[j];
 	}
@@ -23,18 +33,28 @@ void StoringHistoryOfRoundsRP()
 
 void VisualizingHistoryOfRoundsRP()
 {
+<<<<<<< HEAD
 	for (int i = 0; i < RowCounterRP; i++)
 	{
 		for (int j = 0; j < 4; j++)
 		{
 			cout << "[ ";
 			cout << HistoryOfRoundsRP[i][j] << " ";
+=======
+	for (int i = 1; i < RowCounterRP; i++)
+	{
+		for (int j = 1; j < 5; j++)
+		{
+			cout << "[ ";
+			cout << HistoryOfRoundsRP[i][j]<<" ";
+>>>>>>> 45b2948b696d27dffc738bb133743f1531403b80
 			cout << "] ";
 		}
 		cout << endl;
 	}
 }
 
+<<<<<<< HEAD
 void CheckGermansRPN()
 {
 	for (int i = 0; i <= 4; i++)
@@ -82,6 +102,34 @@ void CheckBreakersRPN()
 		}
 	}
 }
+=======
+/*void CheckRPN()
+{
+	for (int i = 1; i <= 4; i++)
+	{
+		for(int j=i;j<=4;j++)
+		{
+			do
+			{​​​​​
+				if(j!=i)
+			    {		​​​​​
+					if (userNumbers[i] == userNumbers[j])
+					{			​​​​​
+						b = true;
+					}​​​​​
+				}​​​​​
+				if (b == true)
+				{
+					cout << "Please re-enter number " << i + 1 << ". Duplicate numbers are not allowed:" << endl;
+					b = false;
+					cin >> userNumbers[i];
+				}​​​​​
+			}​​​​​ while(b == true);
+		}​​​​​
+		b = false;
+	}​​​​​
+}*/
+>>>>>>> 45b2948b696d27dffc738bb133743f1531403b80
 
 void InputGermansNumbersR()
 {
@@ -124,7 +172,16 @@ void InputBreakersGuess()
 	{
 		cout << "Number " << i << ": ";
 		cin >> BreakersGuessNumbersRP[i];
+<<<<<<< HEAD
 		CheckBreakersRPN();
+=======
+		if (BreakersGuessNumbersRP[i] < 0 || BreakersGuessNumbersRP[i]>7)
+		{
+			cout << "Please, type the number again!";
+			i--;
+			cout << endl;
+		}
+>>>>>>> 45b2948b696d27dffc738bb133743f1531403b80
 	}
 }
 
