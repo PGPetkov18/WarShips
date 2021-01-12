@@ -1,18 +1,18 @@
-﻿#include "pch.h"
+#include "pch.h"
 #include <iostream>
 using namespace std;
 
-int GermansNumbers[4];
-int BreakersGuessNumbersRP[4];
-int RightGuessedNumberRP[4];
-int NumbersCountRP = 0;
-int CoordsCountRP = 0;
+int GermansNumbers[4]; //We declare a variable by GermansNumbers
+int BreakersGuessNumbersRP[4]; //We declare a variable by BreakersGuessNumbers
+int RightGuessedNumberRP[4]; //We declare a variable by RightGuessedNumber
+int NumbersCountRP = 0; //We declare a variable by NumbersCount
+int CoordsCountRP = 0;//We declare a variable by CoordsCount
 bool flagRP = false;
 bool flagCheckRPN = false;
-int HistoryOfRoundsRP[14][5];
-int RowCounterRP = 0;
+int HistoryOfRoundsRP[14][5];//We declare a variable by HistoryOfRounds
+int RowCounterRP = 1;//We declare a variable by RowCounter
 
-void StoringHistoryOfRoundsRP()
+void StoringHistoryOfRoundsRP()//function for StoringHistoryOfRounds
 {
 	for (int j = 0; j < 4; j++)
 	{
@@ -21,7 +21,7 @@ void StoringHistoryOfRoundsRP()
 	RowCounterRP++;
 }
 
-void VisualizingHistoryOfRoundsRP()
+void VisualizingHistoryOfRoundsRP()//function for VisualizingHistoryOfRounds
 {
 	for (int i = 0; i < RowCounterRP; i++)
 	{
@@ -35,7 +35,7 @@ void VisualizingHistoryOfRoundsRP()
 	}
 }
 
-void CheckGermansRPN()
+void CheckGermansRPN()//function for CheckGermans
 {
 	for (int i = 0; i <= 4; i++)
 	{
@@ -60,7 +60,7 @@ void CheckGermansRPN()
 }
 
 
-void InputGermansNumbersR()
+void InputGermansNumbersR()//function for InputGermansNumbers 
 {
 	cout << "Type 4 numbers between 0 and 7!" << endl;
 	for (int i = 0; i < 4; i++)
@@ -76,7 +76,7 @@ void InputGermansNumbersR()
 	}
 }
 
-void InputGermansNumbersNR()
+void InputGermansNumbersNR()//function for InputGermansNumbers
 {
 	cout << "Type 4 numbers between 0 and 7 without repeating any of them!" << endl;
 	for (int i = 0; i < 4; i++)
@@ -94,7 +94,7 @@ void InputGermansNumbersNR()
 }
 
 
-void InputBreakersGuess()
+void InputBreakersGuess()//function for InputBreakers
 {
 	cout << "Please, enter the numbers you want to guess: " << endl;
 	for (int i = 0; i < 4; i++)
@@ -104,7 +104,7 @@ void InputBreakersGuess()
 	}
 }
 
-void CheckBreakersGuessRP()
+void CheckBreakersGuessRP()//function for CheckBreakers
 {
 	for (int i = 0; i < 4; i++)
 	{
@@ -122,7 +122,7 @@ void CheckBreakersGuessRP()
 	}
 }
 
-void FeedbackAfterRoundRP()
+void FeedbackAfterRoundRP()//function for FeedbackAfterRound
 {
 	if (CoordsCountRP == 0)
 	{
