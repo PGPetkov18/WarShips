@@ -1,255 +1,169 @@
 #include "pch.h"
 #include <iostream>
-#include "VersusCP.cpp"
-#include "VersusRP.cpp"
 using namespace std;
 
-int HowToPlayMenuChoice; //We declare a variable by HowToPlayMenuChoice
-int GameMenuChoice;//We declare a variable by GameMenuChoice
-bool flagHTP = false;
-bool RMenu;
-int NumberOfRounds = 0;//We declare a variable by NumberOfRounds
-int MenuCount = 0;//We declare a variable by MenuCount
-int VersusRPMenuCount = 0;//We declare a variable by VersusRPMenuCount
-int VersusCPMenuCount = 0;//We declare a variable by VersusCPMenuCount
+int GermansNumbers[4]; //We declare a variable by GermansNumbers
+int BreakersGuessNumbersRP[4]; //We declare a variable by BreakersGuessNumbers
+int RightGuessedNumberRP[4]; //We declare a variable by RightGuessedNumber
+int NumbersCountRP = 0; //We declare a variable by NumbersCount
+int CoordsCountRP = 0;//We declare a variable by CoordsCount
+bool flagRP = false;
+bool flagCheckRPN = false;
+int HistoryOfRoundsRP[14][5];//We declare a variable by HistoryOfRounds
+int RowCounterRP = 1;//We declare a variable by RowCounter
 
-void MenuHowToPlay() //function for MenuHowToPlay
+void StoringHistoryOfRoundsRP()//function for StoringHistoryOfRounds
 {
-	cout << "Select 1 if you want to see how to play, or 2 if you want to choose your game mode:" << endl;
-	cout << "1. Gameplay and rules" << endl;
-	cout << "2. Go to the game mode menu" << endl;
-	cin >> HowToPlayMenuChoice;
-	switch (HowToPlayMenuChoice)
+	for (int j = 0; j < 4; j++)
 	{
-	case 1:
-	{
-		cout << endl;
-		cout << "The Germans (A player or the computer) place a combination of 4 random numbers in the range";
-		cout << "between 0 and 7, indicating the coordinates of their battleships. ";
-		cout << "The code breaker should guess the number within 13 tries using the board. ";
-		cout << "The codebreaker places their guesses. The Germans (a player or a computer) should give ";
-		cout << "a feedback whether just a number is guessed or a number and is on a correct place. If just a number ";
-		cout << "is guessed, it should be given “Guessed numbers”. If the code breaker guesses a ";
-		cout << "number on the correct position, then the information should be displayed “Guessed numbers and positions”.";
-		cout << endl;
-		cout << "The Germans are NOT allowed to give any further information ";
-		cout << "except the correct number of the guessed numbers or the number of ";
-		cout << "the guessed numbers on correct positions!" << endl;
-		cout << endl;
-		MenuHowToPlay();
+		HistoryOfRoundsRP[RowCounterRP][j] = BreakersGuessNumbersRP[j];
 	}
-	case 2:
-	{
-		flagHTP = true;
+	RowCounterRP++;
+}
 
-		break;
-	}
-	default:
+void VisualizingHistoryOfRoundsRP() //function for VisualizingHistoryOfRounds
+{
+	for (int i = 0; i < RowCounterRP; i++)
 	{
-		MenuHowToPlay();
-	}
+		for (int j = 0; j < 4; j++)
+		{
+			cout << "[ ";
+			cout << HistoryOfRoundsRP[i][j] << " ";
+			cout << "] ";
+		}
+		cout << endl;
 	}
 }
 
-void MapVisualizer() //function for MapVisualizer
+void CheckGermansRPN() //function for CheckGermans
 {
-	;
-	int TempCountCoords = 0;
-	int TempCountNumbersGS = 0;
-	int TempCountGermansNumbers = 0;
-	for (int i = 1; i <= 4; i++)
+	for (int i = 0; i <= 4; i++)
 	{
-		cout << " [";
-		cout << i;
-		cout << "] ";
-	}
-	cout << endl;
-}
-
-void MenuVersusCP() //function for MenuVersus
-{
-	do
-	{
-		cout << "Please, choose whether you want the germans to have reapeating numbers or no!";
-		cout << endl;
-		cout << "1. Repeating numbers";
-		cout << endl;
-		cout << "2. No repeating numbers";
-		cout << endl;
-		cin >> RMenu;
-
-		switch (RMenu)
+		for (int j = i; j <= 4; j++)
 		{
-		case 1:
-		{
-			GenerateRandomNumbersR();
 			do
 			{
-				InputBreakersGuess();
-				CheckBreakersGuessRP();
-				FeedbackAfterRound();
-				StoringHistoryOfRoundsCP();
-				NumberOfRounds++;
-			} while (NumberOfRounds <= 13 && flagCP == false);
-			if (NumberOfRounds <= 13 && flagCP == false)
-			{
-				cout << "Sorry, you have not guessed any numbers and their correct spots!" << endl;
-				cout << "Thank you for playing" << endl;
-				CoordsCountCP = 0;
-				NumberOfRounds = 0;
-			}
-			VisualizingHistoryOfRoundsCP();
-			VersusCPMenuCount++;
-			break;
-
+				if (GermansNumbers[i] == GermansNumbers[j])
+				{
+					flagCheckRPN = true;
+				}
+				if (flagCheckRPN == true)
+				{
+					cout << "Please type the number again" << i + 1 << ":" << endl;
+					flagCheckRPN = false;
+					cin >> GermansNumbers[i];
+				}
+			} while (flagCheckRPN == true);
+			flagCheckRPN = false;
 		}
-		case 2:
-		{
-			GenerateRandomNumbersNR();
-			do
-			{
-				InputBreakersGuess();
-				CheckBreakersGuessCP();
-				FeedbackAfterRound();
-				StoringHistoryOfRoundsCP();
-				NumberOfRounds++;
-			} while (NumberOfRounds <= 13 && flagCP == false);
-			if (NumberOfRounds <= 13 && flagCP == false)
-			{
-				cout << "Sorry, you have not guessed any numbers and their correct spots!" << endl;
-				cout << "Thank you for playing!" << endl;
-				CoordsCountCP = 0;
-				NumberOfRounds = 0;
-			}
-			VisualizingHistoryOfRoundsCP();
-			VersusCPMenuCount++;
-			break;
-		}
-		case 3:
-		{
-			VersusCPMenuCount++;
-			break;
-		}
-		default:
-		{
-			cout << "Please choose other menu!" << endl;
-		}
-		}
-	} while (VersusCPMenuCount == 0);
+	}
 }
 
-void MenuVersusRP() //function for MenuVersus
+void CheckBreakersRPN() //function for CheckBreakers
 {
-	do
+	for (int i = 0; i <= 4; i++)
 	{
-		cout << "Please, choose whether you want the germans to have reapeating numbers or no!";
-		cout << endl;
-		cout << "1. Repeating numbers";
-		cout << endl;
-		cout << "2. No repeating numbers";
-		cout << endl;
-		cin >> RMenu;
-
-		switch (RMenu)
+		for (int j = i; j <= 4; j++)
 		{
-		case 1:
-		{
-			InputGermansNumbersR();
 			do
 			{
-				InputBreakersGuess();
-				CheckBreakersGuessRP();
-				FeedbackAfterRound();
-				StoringHistoryOfRoundsRP();
-				NumberOfRounds++;
-			} while (NumberOfRounds <= 13 && flagRP == false);
-			if (NumberOfRounds <= 13 && flagRP == false)
-			{
-				cout << "Sorry, you have not guessed any numbers and their correct spots!" << endl;
-				cout << "Thank you for playing" << endl;
-				CoordsCountRP = 0;
-				NumberOfRounds = 0;
-			}
-			VisualizingHistoryOfRoundsRP();
-			VersusRPMenuCount++;
-			break;
-
+				if (BreakersGuessNumbersRP[i] == BreakersGuessNumbersRP[j])
+				{
+					flagCheckRPN = true;
+				}
+				if (flagCheckRPN == true)
+				{
+					cout << "Please type the number again" << i + 1 << ":" << endl;
+					flagCheckRPN = false;
+					cin >> BreakersGuessNumbersRP[i];
+				}
+			} while (flagCheckRPN == true);
+			flagCheckRPN = false;
 		}
-		case 2:
-		{
-			InputGermansNumbersR();
-			do
-			{
-				InputBreakersGuess();
-				CheckBreakersGuessRP();
-				FeedbackAfterRound();
-				StoringHistoryOfRoundsRP();
-				NumberOfRounds++;
-			} while (NumberOfRounds <= 13 && flagRP == false);
-			if (NumberOfRounds <= 13 && flagRP == false)
-			{
-				cout << "Sorry, you have not guessed any numbers and their correct spots!" << endl;
-				cout << "Thank you for playing!" << endl;
-			}
-			VersusRPMenuCount++;
-			VisualizingHistoryOfRoundsRP();
-			break;
-		}
-		case 3:
-		{
-			VersusRPMenuCount++;
-			break;
-		}
-		default:
-		{
-			cout << "Please choose other menu!" << endl;
-		}
-		}
-	} while (VersusRPMenuCount == 0);
+	}
 }
 
-void MenuGame() //function for MenuGame
+void InputGermansNumbersR() //function for InputGermansNumbers 
 {
-	do
+	cout << "Type 4 numbers between 0 and 7!" << endl;
+	for (int i = 0; i < 4; i++)
 	{
-		cout << "Select a menu: " << endl;
-		cout << "1. Play versus a person" << endl;
-		cout << "2. Play versus the computer" << endl;
-		cout << "3. Exit the program" << endl;
-		cin >> GameMenuChoice;
-
-		switch (GameMenuChoice)
+		cout << "Number " << i << ":";
+		cin >> GermansNumbers[i];
+		if (GermansNumbers[i] < 0 || GermansNumbers[i]>7)
 		{
-		case 1:
-		{
-			MenuVersusRP();
-			break;
+			cout << "Please, type the number again!";
+			i -= 1;
 		}
-		case 2:
-		{
-			break;
-		}
-		case 3:
-		{
-			cout << "Thank you for playing!";
-			MenuCount = 1;
-			break;
-		}
-		default:
-		{
-			cout << "Please, choose other menu!" << endl;
-		}
-		}
-	} while (MenuCount == 0);
+		cout << endl;
+	}
 }
 
-int main() //we go to int main
+void InputGermansNumbersNR() //function for InputGermansNumbers
 {
-	cout << "Welcome to the game!" << endl;
-	cout << "You can play versus the computer or a friend." << endl;
-	MenuHowToPlay();
-	if (flagHTP == true)
+	cout << "Type 4 numbers between 0 and 7 without repeating any of them!" << endl;
+	for (int i = 0; i < 4; i++)
 	{
-		MenuGame();
+		cout << "Number " << i << ":";
+		cin >> GermansNumbers[i];
+		CheckGermansRPN();
+		if (GermansNumbers[i] < 0 || GermansNumbers[i]>7)
+		{
+			cout << "Please, type the number again!";
+			i -= 1;
+		}
+		cout << endl;
+	}
+}
+
+
+void InputBreakersGuess() //function for InputBreakers
+{
+	cout << "Please, enter the numbers you want to guess: " << endl;
+	for (int i = 0; i < 4; i++)
+	{
+		cout << "Number " << i << ": ";
+		cin >> BreakersGuessNumbersRP[i];
+		CheckBreakersRPN();
+	}
+}
+
+void CheckBreakersGuessRP() //function for CheckBreakers
+{
+	for (int i = 0; i < 4; i++)
+	{
+		for (int j = 0; j < 4; j++)
+		{
+			if (BreakersGuessNumbersRP[i] == GermansNumbers[j])
+			{
+				NumbersCountRP++;
+				if (i == j)
+				{
+					CoordsCountRP++;
+				}
+			}
+		}
+	}
+}
+
+void FeedbackAfterRound() //function for FeedbackAfterRound
+{
+	if (CoordsCountRP == 0)
+	{
+		cout << "You've guessed " << NumbersCountRP << " numbers correctly, but none of them was in the right spot!" << endl;
+		NumbersCountRP = 0;
+	}
+	else if (CoordsCountRP != 4 && CoordsCountRP != 0)
+	{
+		cout << "You've guessed " << CoordsCountRP << " numbers correctly on their places, and " << NumbersCountRP - CoordsCountRP << "numbers, but not on their correct places!" << endl;
+		CoordsCountRP = 0;
+		NumbersCountRP = 0;
+	}
+	else if (CoordsCountRP == 4)
+	{
+		cout << "Congatulations, you have beaten the game, you have guessed all the numbers on their correct spots" << endl << endl << endl;
+		NumbersCountRP = 0;
+		flagRP = true;
+		CoordsCountRP = 0;
 	}
 }
