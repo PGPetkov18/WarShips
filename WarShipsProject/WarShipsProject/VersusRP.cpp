@@ -10,7 +10,7 @@ int CoordsCountRP = 0;
 bool flagRP = false;
 bool flagCheckRPN = false;
 int HistoryOfRoundsRP[14][5];
-int RowCounterRP = 1;
+int RowCounterRP = 0;
 
 void StoringHistoryOfRoundsRP()
 {
@@ -59,29 +59,6 @@ void CheckGermansRPN()
 	}
 }
 
-void CheckBreakersRPN()
-{
-	for (int i = 0; i <= 4; i++)
-	{
-		for (int j = i; j <= 4; j++)
-		{
-			do
-			{
-				if (BreakersGuessNumbersRP[i] == BreakersGuessNumbersRP[j])
-				{
-					flagCheckRPN = true;
-				}
-				if (flagCheckRPN == true)
-				{
-					cout << "Please type the number again" << i + 1 << ":" << endl;
-					flagCheckRPN = false;
-					cin >> BreakersGuessNumbersRP[i];
-				}
-			} while (flagCheckRPN == true);
-			flagCheckRPN = false;
-		}
-	}
-}
 
 void InputGermansNumbersR()
 {
@@ -124,7 +101,6 @@ void InputBreakersGuess()
 	{
 		cout << "Number " << i << ": ";
 		cin >> BreakersGuessNumbersRP[i];
-		CheckBreakersRPN();
 	}
 }
 
@@ -146,7 +122,7 @@ void CheckBreakersGuessRP()
 	}
 }
 
-void FeedbackAfterRound()
+void FeedbackAfterRoundRP()
 {
 	if (CoordsCountRP == 0)
 	{
